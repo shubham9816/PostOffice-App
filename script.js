@@ -101,29 +101,27 @@ get_btn.addEventListener("click", async () => {
 
 // search function
 search.addEventListener("keyup", (e)=>{
+    post_office_card.innerHTML = "";
     let inputText = e.target.value;
-    let first = inputText[0].toUpperCase();
-    let searchText= first + inputText.slice(1,inputText.length);
-    if(postOfficeDetail!="undefined"){
-        if(postOfficeDetail.Status == "Success"){
-            postOfficeDetail.PostOffice.forEach(postOffice => {
-                
-                if(searchText===postOffice.Name){
+    let searchText= inputText.toUpperCase();
 
-                    const card = document.createElement("div");
-                    card.className = "post_office_detail";
-                    card.innerHTML = `
-                    <h1>${postOffice.Name}</h1>
-                    <h1>${postOffice.BranchType}</h1>
-                    <h1>${postOffice.DeliveryStatus}</h1>
-                    <h1>${postOffice.District}</h1>
-                    <h1>${postOffice.Division}</h1>
-                    `
-                    post_office_card.appendChild(card);
-                }
-                });
-            }
-            
+
+    postOfficeDetail.PostOffice.forEach(postOffice => {
+        let officeName = postOffice.Name.toUpperCase();
+        let searchLength = searchText.length;
+        if(officeName.slice(0,searchLength) == searchText){
+            const card = document.createElement("div");
+            card.className = "post_office_detail";
+            card.innerHTML = `
+                <h1>${postOffice.Name}</h1>
+                <h1>${postOffice.BranchType}</h1>
+                <h1>${postOffice.DeliveryStatus}</h1>
+                <h1>${postOffice.District}</h1>
+                <h1>${postOffice.Division}</h1>
+            `
+            post_office_card.appendChild(card);
         }
+        
+    });        
 
-})
+});
